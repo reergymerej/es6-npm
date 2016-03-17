@@ -6,11 +6,13 @@ var plumber = require('gulp-plumber');
 
 gulp.task('build', function () {
     return gulp.src('src/index.es6')
+        .pipe(plumber({
+            errorHandler: function (err) {
+                console.log('error with stream', err);
+                this.emit( 'end' );
+            }
+        }))
         .pipe(babel())
-        .on('error', function () {
-            gutil.log('babel error', arguments);
-            this.emit('end');
-        })
         .pipe(gulp.dest('lib'));
 });
 
@@ -24,14 +26,21 @@ gulp.task('run', ['build'], function (cb) {
 gulp.task('watch', function () {
     gutil.log('Watch yourself.');
 
-    return gulp.watch('src/**/*.es6', ['run']);
+    var glob = 'src/**/*.es6';
+
+    return gulp.watch(glob, ['run'])
     // return gulp.watch('src/**/*.es6')
-    //     // .pipe(plumber())
+    //     .pipe(plumber({
+    //         handleError: function (err) {
+    //             gutil.log('error:', err);
+    //             this.emit('end');
+    //         }
+    //     }))
     //     .pipe(babel())
-    //     .on('error', (err) => {
-    //       gutil.log(gutil.colors.red('[Compilation Error]'));
-    //       gutil.log(gutil.colors.red(err.message));
-    //     })
+    // //     .on('error', (err) => {
+    // //       gutil.log(gutil.colors.red('[Compilation Error]'));
+    // //       gutil.log(gutil.colors.red(err.message));
+    // //     })
     //     .pipe(gulp.dest('lib'));
 
     // return gulp.src('src/**/*.es6')
@@ -46,4 +55,4 @@ gulp.task('watch', function () {
 });
 
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['run', 'watch']);

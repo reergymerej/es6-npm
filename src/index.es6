@@ -1,3 +1,3 @@
 const foo = 'asdf';
-asdfconsole.log(foo);
+console.log(foo + 122);
 
