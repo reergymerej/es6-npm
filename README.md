@@ -17,5 +17,6 @@ Stay in ST3 by creating a "gulp" build system.  Manage everything through the gu
 
 ## TODO
 
-* add watch task for gulp
 * explain the prepublish script
+* add watch task for gulp
+* show errors on babel task

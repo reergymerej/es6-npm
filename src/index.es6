@@ -1,6 +1,3 @@
-// console.log('yo');
-const foo = (() => {
-    return 321;
-})();
+const foo = 'asdf';
+asdfconsole.log(foo);
 
-console.log(foo)
